@@ -1,0 +1,20 @@
+{
+	"name": "wrossmann/restclient",
+	"description": "REST Client",
+	"version": "1.0.3",	
+	"require": {
+		"guzzlehttp/guzzle": "5.*",
+		"monolog/monolog": "1.*"
+	},
+	"autoload": {
+		"psr-4": {
+			"wrossmann\\restclient\\": "src/"
+		}
+	},
+	"authors": [
+		{
+			"name": "Wade Rossmann",
+			"email": "wrossmann@gmail.com"
+		}
+	]
+}
