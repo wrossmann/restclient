@@ -60,7 +60,7 @@ class Client implements ResourceInterface {
 	 * @param	array	$in_params	Parameters for API request
 	 */
 	public function post($path, $in_params=[]) {
-		$params = [ 'headers' => $this->basicHeaders(), 'json' => $in_params ];
+		$params = [ 'headers' => $this->basicHeaders(), 'body' => $this->encodeParameters($in_params) ];
 		return $this->guzzle('post', $path, $params);
 	}
 
@@ -71,7 +71,7 @@ class Client implements ResourceInterface {
 	 */
 	public function delete($path, $in_params=[]) {
 		$params = [ 'headers' => $this->basicHeaders() ];
-		if( !empty($in_params) ) { $params['json'] = $in_params; }
+		if( !empty($in_params) ) { $params['body'] = $this->encodeParameters($in_params); }
 		return $this->guzzle('delete', $path, $params);
 	}
 
@@ -82,7 +82,7 @@ class Client implements ResourceInterface {
 	 * @todo	Implement!
 	 */
 	public function put($path, $in_params=[]) {
-		$params = [ 'headers' => $this->basicHeaders(), 'json' => $in_params ];
+		$params = [ 'headers' => $this->basicHeaders(), 'body' => $this->encodeParameters($in_params) ];
 		return $this->guzzle('put', $path, $params);
 	}
 
@@ -107,6 +107,15 @@ class Client implements ResourceInterface {
 	 */
 	public function attachLogger(\Psr\Log\LoggerInterface $logger) {
 		$this->_loggers[] = $logger;
+	}
+	
+	/**
+	 * Encode request parameters. Default to JSON, override method for others.
+	 * @param array $params
+	 * @return string
+	 */
+	protected function encodeParameters($params) {
+		return json_encode($params); 
 	}
 	
 	/**
